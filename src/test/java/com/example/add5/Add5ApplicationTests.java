@@ -1,5 +1,7 @@
 package com.example.add5;
 
+import com.example.add5.answer.AnswerService;
+import com.example.add5.question.Question;
 import com.example.add5.question.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,15 @@ class Add5ApplicationTests {
 
 	@Autowired
 	private QuestionService questionService;
+	@Autowired
+	private AnswerService answerService;
 
 	@Test
 	void testJpa() {
-		for (int i = 1; i <= 300; i++) {
-			String subject = String.format("테스트 데이터입니다:[%03d]", i);
+		for (int i = 1; i <= 30; i++) {
 			String content = "내용무";
-			this.questionService.create(subject, content, null);
+			Question question = this.questionService.getQuestion(300);
+			this.answerService.create(question, content, null);
 		}
 	}
 }
