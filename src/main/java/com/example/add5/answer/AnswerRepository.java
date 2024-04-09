@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
 
-    @Override
-    Page<Answer> findAll(Pageable pageable);
+    Page<Answer> findByQuestionId(Integer questionId, Pageable pageable);
 }

@@ -18,7 +18,7 @@ class Add5ApplicationTests {
 	@Test
 	void testJpa() {
 		for (int i = 1; i <= 30; i++) {
-			String content = "내용무";
+			String content = "내용무 [%d]"+i;
 			Question question = this.questionService.getQuestion(300);
 			this.answerService.create(question, content, null);
 		}

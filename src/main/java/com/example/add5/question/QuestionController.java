@@ -1,6 +1,8 @@
 package com.example.add5.question;
 
+import com.example.add5.answer.Answer;
 import com.example.add5.answer.AnswerForm;
+import com.example.add5.answer.AnswerService;
 import com.example.add5.user.SiteUser;
 import com.example.add5.user.UserService;
 import jakarta.validation.Valid;
@@ -24,6 +26,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final UserService userService;
+    private final AnswerService answerService;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value = "kw", defaultValue = "")String kw
@@ -35,9 +38,12 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm, @RequestParam(value = "page", defaultValue = "0") int page) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
+
+        Page<Answer> paging = this.answerService.getListByQuestionId(id, page);
+        model.addAttribute("paging", paging);
         return "question_detail";
     }
 

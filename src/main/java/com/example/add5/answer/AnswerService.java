@@ -18,9 +18,10 @@ public class AnswerService {
 
     private final AnswerRepository answerRepository;
 
-    public Page<Answer> getList(int page){
-        Pageable pageable = PageRequest.of(page,10);
-        return this.answerRepository.findAll(pageable);
+    // 질문 ID를 기반으로 해당 질문에 대한 답변 목록을 가져오는 메서드
+    public Page<Answer> getListByQuestionId(int questionId, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.answerRepository.findByQuestionId(questionId, pageable);
     }
 
     public Answer create(Question question, String content, SiteUser author) {
