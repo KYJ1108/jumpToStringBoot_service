@@ -36,6 +36,20 @@
     </div>
     <!-- 답변의 갯수 표시 -->
     <h5 class="border-bottom my-3 py-2" th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+    <!-- 정렬 버튼 -->
+<!--    <div class="sorting-buttons mb-3">-->
+<!--        <a href="?sort=page" class="btn btn-outline-secondary">최신순</a>-->
+<!--        <a href="?sort=Voter" class="btn btn-outline-secondary">추천순</a>-->
+<!--    </div>-->
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a class="btn btn-outline-secondary" th:href="@{|/question/voter/${question.id}|}">추천순</a>
+        <a class="btn btn-outline-secondary" th:href="@{|/question/detail/${question.id}|}">최신순</a>
+    </div>
+
+<!--    <button>-->
+<!--        <a th:href="@{|/question/voter/${question.id}|}" th:text="'추천순'"></a>-->
+<!--    </button>-->
     <!-- 답변 반복 시작 -->
     <div th:with="answers=${question.answerList}, paging=${paging}">
     <div class="card my-3" th:each="answer, loop : ${paging}">

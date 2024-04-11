@@ -7,9 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,8 +23,14 @@ public class AnswerService {
 
     // 질문 ID를 기반으로 해당 질문에 대한 답변 목록을 가져오는 메서드
     public Page<Answer> getListByQuestionId(int questionId, int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("createDate").descending());
         return this.answerRepository.findByQuestionId(questionId, pageable);
+    }
+
+    // 질문 ID를 기반으로 해당 질문에 대한 답변 목록을 가져오는 메서드 -> 추천순
+    public Page<Answer> getListByQuestionIdOrderByRecommendation(int questionId, int page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        return answerRepository.findByQuestionIdOrderedByVoteCount(questionId, pageable);
     }
 
     public Answer create(Question question, String content, SiteUser author) {
